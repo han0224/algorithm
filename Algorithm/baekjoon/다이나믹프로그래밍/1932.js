@@ -6,15 +6,34 @@ const input = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
 //   .trim()
 //   .split("\r\n");
 
-const N = input[0];
-const arr = input.slice(1).map((v) => v.split(" ").map((v) => +v));
-
-for (let i = 1; i < N; i++) {
-  for (let j = 0; j < arr[i].length; j++) {
-    const pre = arr[i - 1][j - 1] || 0;
-    const next = arr[i - 1][j] || 0;
-    arr[i][j] += Math.max(pre, next);
+const answer = [];
+const [N, cards, M, search] = [
+  input[0],
+  input[1].split(" ").map((v) => +v),
+  input[2],
+  input[3].split(" ").map((v) => +v),
+];
+const binarySearch = (arr, target) => {
+  let start = 0;
+  let end = arr.length - 1;
+  let mid = Math.floor(start + end / 2);
+  while (end - start >= 0) {
+    if (target === arr[mid]) {
+      return 1;
+    } else if (target > arr[mid]) {
+      start = mid + 1;
+    } else {
+      end = mid - 1;
+    }
+    mid = Math.floor((start + end) / 2);
   }
-}
+  return 0;
+};
 
-console.log(Math.max(...arr[N - 1]));
+cards.sort((a, b) => a - b);
+
+search.forEach((v) => {
+  answer.push(binarySearch(cards, v));
+});
+
+console.log(answer.join(" "));
