@@ -27,3 +27,5 @@ if (filter.length === 0) {
   console.log(filter.reduce((acc, cur) => acc + cur, 0));
   console.log(filter[0]);
 }
+
+// N 이하의 소수를 구할때 에라토스테네스의 체 사용
